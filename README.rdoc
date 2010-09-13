@@ -1,0 +1,7 @@
+= designate
+
+Designate is a simple Ruby wrapper for the Zerigo API v1.1 specification.
+
+== Copyright
+
+Copyright (c) 2010 James Miller. See LICENSE for details.
