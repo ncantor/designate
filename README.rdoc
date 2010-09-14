@@ -2,6 +2,52 @@
 
 Designate is a simple Ruby wrapper for the Zerigo API v1.1 specification.
 
+= Usage
+
+```ruby
+d = Designate::Client.new("example@email.com", "30f1b76a010d062c22b07bda66c1d9f0")
+```
+
+Get all zones:
+
+```ruby
+d.zones
+```
+
+Create a new zone:
+
+```ruby
+d.create_zone("example.com")
+```
+
+Find a specific zone:
+
+```ruby
+d.find_zone_by_id(12345)
+d.find_zone_by_domain("example.com")
+```
+
+Get all zone templates:
+```ruby
+d.templates
+```
+
+Find a template:
+
+```ruby
+d.find_template(12345)
+```
+
+Get all hosts in a zone:
+```ruby
+d.find_zone_by_domain("example.com").hosts
+```
+
+Create host:
+```ruby
+d.find_zone_by_domain("example.com").create_host("MX", "mx1.example.com.")
+```
+
 == Copyright
 
 Copyright (c) 2010 James Miller. See LICENSE for details.
