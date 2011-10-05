@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'rest_client'
 require 'crack/xml'
 require File.expand_path(File.dirname(__FILE__) + '/designate/client')

@@ -6,10 +6,15 @@ module Designate
     API_VERSION = "1.1"
     DOMAIN = "ns.zerigo.com"
 
-    def initialize(email, key)
-      @@auth_string = CGI.escape(email) + ':' + CGI.escape(key)
+    def initialize()
+      @@auth_string = CGI.escape(zerigo_config[:username]) + ':' + CGI.escape(zerigo_config[:key])
+      @domain = zerigo_config[:domain]
     end
-
+    
+    def zerigo_config()
+      YAML.load(File.new("config/zerigo.yml"))
+    end
+    
     def zones
       zones = []
       get('zones.xml')['zones'].each { |zone| zones << Zone.new(zone) }
@@ -22,16 +27,16 @@ module Designate
       end
     end
 
-    def find_zone_by_domain(domain)
+    def find_zone_by_domain(domain = @domain)
       if zone = get("zones/#{domain}.xml")['zone']
         Zone.new(zone)
       end
     end
 
-    def create_zone(domain, options = {})
+    def create_zone(domain = @domain, options = {})
       options[:domain] = domain
       options[:default_ttl] ||= 14400
-      options[:nx_ttl] ||= 900
+      options[:nx_ttl] ||= 300
       if options[:zone_template_id]
         options[:follow_template] ||= 'no'
       end
@@ -40,7 +45,7 @@ module Designate
       end
     end
 
-    def find_or_create_zone(domain)
+    def find_or_create_zone(domain = @domain)
       if zone = find_zone_by_domain(domain)
         return zone
       else

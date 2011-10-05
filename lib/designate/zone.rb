@@ -9,13 +9,13 @@ module Designate
         end
       end
       hosts = []
-      data['hosts'].each { |host| hosts << Host.new(host) }
+      data['hosts'].each { |host| hosts << Host.new(host) } unless data['hosts'].nil?
       @hosts = hosts
     end
 
     def update(options = {})
       options[:default_ttl] ||= 14400
-      options[:nx_ttl] ||= 900
+      options[:nx_ttl] ||= 60
       if options[:zone_template_id]
         options[:follow_template] ||= 'no'
       end
@@ -34,6 +34,7 @@ module Designate
 
     def create_host(host_type, data, options = {})
       raise InvalidHostType unless %w(A AAAA CNAME MX NS SRV TXT).include?(host_type)
+      return if hosts.find {|host| host.hostname == options[:hostname]}
       options[:host_type] = host_type
       options[:hostname] ||= nil
       options[:data] = data
