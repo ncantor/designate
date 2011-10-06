@@ -4,7 +4,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   namespace :zerigo do
     desc "Run only on individual servers, not entire roles."
     task :first_time do
-      hostname = variables[:logger].instance_variable_get("@options")[:actions].first
+      hostname = capture('hostname -s').chomp
       dns_names = []
       roles.each do |role| 
         dns_names << role[1].instance_variable_get("@static_servers").first.instance_variable_get("@host")
