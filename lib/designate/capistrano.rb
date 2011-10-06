@@ -2,7 +2,7 @@ require File.join(File.dirname(__FILE__), '../designate')
 
 Capistrano::Configuration.instance(:must_exist).load do
   namespace :zerigo do
-    desc "RUN ONLY ON A SINGLE INSTANCE AT A TIME. Run the first time the app is deployed."
+    desc "Run only on individual servers, not entire roles."
     task :first_time do
       hostname = variables[:logger].instance_variable_get("@options")[:actions].first
       dns_names = []
