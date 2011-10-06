@@ -34,7 +34,9 @@ Get all hosts in a zone:
 Create host:
 
   d.find_zone_by_domain("example.com").create_host("MX", "mx1.example.com.")
-  
+
+The next features have only been tested in conjunction with capify-ec2. 
+I recommend further testing before adding them to your projects.
 Also works via Capistrano, using zerigo.yml:
   :username: "username"
   :key: "API Key"
@@ -45,7 +47,7 @@ Also works via Capistrano, using zerigo.yml:
   cap web zerigo:first_time
   
   creates:
-  CNAME, web.example.com => actual DNS name
+  CNAME, web.example.com => actual DNS name, as specified in your server address.
   CNAME, web-test.example.com => web.example.com
   
   Nothing will be created if the DNS names are already in use.
