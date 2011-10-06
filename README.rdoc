@@ -44,11 +44,11 @@ Also works via Capistrano, using zerigo.yml:
   
   Within your project:
   application = "test"
-  cap web zerigo:first_time
+  cap <server_name> zerigo:first_time
   
-  creates:
-  CNAME, web.example.com => actual DNS name, as specified in your server address.
-  CNAME, web-test.example.com => web.example.com
+  retrieves the first part of the <hostname> from the remote machine and creates:
+  CNAME, <hostname>.example.com => actual DNS name, as specified in your server address.
+  CNAME, <hostname>-test.example.com => web.example.com
   
   Nothing will be created if the DNS names are already in use.
 
