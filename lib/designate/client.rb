@@ -22,13 +22,13 @@ module Designate
     end
 
     def find_zone_by_id(id)
-      if zone = get("zones/#{id}.xml")['zone']
+      if zone = get("zones/#{id}.xml")['zone'] rescue false
         Zone.new(zone)
       end
     end
 
     def find_zone_by_domain(domain = @domain)
-      if zone = get("zones/#{domain}.xml")['zone']
+      if zone = get("zones/#{domain}.xml")['zone'] rescue false
         Zone.new(zone)
       end
     end
@@ -60,7 +60,7 @@ module Designate
     end
 
     def find_template_by_id(id)
-      if template = get("zone_templates/#{id}.xml")['zone_template']
+      if template = get("zone_templates/#{id}.xml")['zone_template'] rescue false
         Template.new(template)
       end
     end
