@@ -9,7 +9,7 @@ Capistrano::Configuration.instance(:must_exist).load do
       roles.each do |role| 
         dns_names << role[1].instance_variable_get("@static_servers").first.instance_variable_get("@host")
       end
-      zone = Designate::Client.new().find_zone_by_domain()
+      zone = Designate::Client.new().find_or_create_zone()
       zone.create_host('CNAME', "#{hostname}.#{zerigo_config[:domain]}", {:hostname => "#{hostname}-#{application}"})
       zone.create_host('CNAME', dns_names.first, {:hostname => hostname})
     end

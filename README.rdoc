@@ -51,6 +51,7 @@ Also works via Capistrano, using zerigo.yml:
   CNAME, <hostname>-test.example.com => web.example.com
   
   Nothing will be created if the DNS names are already in use.
+  If the domain does not exist, it will be created.
 
 == Copyright
 
