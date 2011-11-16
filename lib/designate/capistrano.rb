@@ -1,4 +1,6 @@
 require File.join(File.dirname(__FILE__), '../designate')
+require 'rubygems'
+require 'capistrano'
 
 Capistrano::Configuration.instance(:must_exist).load do
   namespace :zerigo do
