@@ -34,7 +34,7 @@ module Designate
 
     def create_host(host_type, data, options = {})
       raise InvalidHostType unless %w(A AAAA CNAME MX NS SRV TXT).include?(host_type)
-      return if hosts.find {|host| host.hostname == options[:hostname]}
+      return if @hosts.find {|host| host.hostname == options[:hostname]}
       options[:host_type] = host_type
       options[:hostname] ||= nil
       options[:data] = data
