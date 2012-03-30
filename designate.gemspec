@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   s.has_rdoc = false
   s.add_dependency("rest-client", "= 1.6.7")
-  s.add_depenency("capify-ec2", ">=1.2.4")
+  s.add_dependency("capify-ec2", ">=1.2.4")
   s.add_dependency("crack", "= 0.3.1")
   s.add_development_dependency('shoulda')
 end
