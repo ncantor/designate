@@ -43,8 +43,7 @@ Capistrano::Configuration.instance(:must_exist).load do
     
     def delete_hosts(expired_hosts, zone)
       zone.hosts.delete_if {|host| !expired_hosts.find {|hostname| hostname == host.hostname}}
-      zone.hosts.each {|host| p "Host to delete: #{host.hostname}"; host.destroy}
-      #region-20120330-1112-00 should be deleted      
+      zone.hosts.each {|host| p "Deleting host: #{host.fqdn}"; host.destroy}
     end
   end
 end
