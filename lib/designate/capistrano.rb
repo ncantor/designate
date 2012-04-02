@@ -29,21 +29,23 @@ Capistrano::Configuration.instance(:must_exist).load do
     end
     
     def cleanup_hosts(subzone, zone)
-      return if !zerigo_config[:host_prefix]
+      return if !zerigo_config[:subdomain]
       expired_hosts = get_expired_hosts(subzone)
       delete_hosts(expired_hosts, subzone)
       delete_hosts(expired_hosts, zone)
     end
     
     def get_expired_hosts(subzone)
-      hostnames = CapifyEc2.new().desired_instances.select {|instance| instance.name.match(zerigo_config[:host_prefix])}.map {|instance| instance.name}
-      subzone.hosts.delete_if {|host| hostnames.find {|hostname| hostname == host.hostname} || 
-        !host.hostname.match(zerigo_config[:host_prefix])}.map {|host| host.hostname}
+      hostnames = []
+      capec2 = CapifyEc2.new
+      roles.each {|role| hostnames << capec2.get_instances_by_role(role[0]).map {|instance| instance.name}}
+      hostnames.flatten!
+      subzone.hosts.delete_if {|host| hostnames.find {|hostname| hostname == host.hostname}}.map {|host| host.hostname}
     end
     
     def delete_hosts(expired_hosts, zone)
       zone.hosts.delete_if {|host| !expired_hosts.find {|hostname| hostname == host.hostname}}
-      zone.hosts.each {|host| p "Deleting host: #{host.fqdn}"; host.destroy}
+      zone.hosts.each {|host| p "Deleting expired host: #{host.fqdn}"; host.destroy}
     end
   end
 end
