@@ -45,7 +45,7 @@ Capistrano::Configuration.instance(:must_exist).load do
     
     def delete_hosts(expired_hosts, zone)
       zone.hosts.delete_if {|host| !expired_hosts.find {|hostname| hostname == host.hostname}}
-      zone.hosts.each {|host| p "Deleting expired host: #{host.fqdn}"; host.destroy}
+      zone.hosts.each {|host| p "Deleting expired host: #{host.fqdn}"; host.destroy} rescue puts "Looks like #{host.fqdn} has already been deleted"
     end
   end
 end
