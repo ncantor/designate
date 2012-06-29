@@ -44,8 +44,16 @@ Capistrano::Configuration.instance(:must_exist).load do
     end
     
     def delete_hosts(expired_hosts, zone)
+      expired_hosts << "web-20120629-1242-25-0"
       zone.hosts.delete_if {|host| !expired_hosts.find {|hostname| hostname == host.hostname}}
-      zone.hosts.each {|host| p "Deleting expired host: #{host.fqdn}"; host.destroy} rescue puts "Looks like #{host.fqdn} has already been deleted"
+      zone.hosts.each do |host| 
+        p "Deleting expired host: #{host.fqdn}"
+        begin 
+          host.destroy 
+        rescue
+          puts "Looks like #{host.fqdn} has already been deleted"
+        end
+      end
     end
   end
 end
